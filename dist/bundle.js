@@ -258,6 +258,21 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(15);
+} else {
+  module.exports = __webpack_require__(16);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 /**
@@ -294,21 +309,6 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(15);
-} else {
-  module.exports = __webpack_require__(16);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 3 */
@@ -506,7 +506,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(2);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -682,7 +682,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(2);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -940,7 +940,7 @@ module.exports = focusNode;
 "use strict";
 
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -973,7 +973,7 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), do
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(3),n=__webpack_require__(4),p=__webpack_require__(1),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(3),n=__webpack_require__(4),p=__webpack_require__(2),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -1013,7 +1013,7 @@ var _assign = __webpack_require__(3);
 var emptyObject = __webpack_require__(4);
 var invariant = __webpack_require__(5);
 var warning = __webpack_require__(6);
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(2);
 var checkPropTypes = __webpack_require__(7);
 
 // TODO: this is special because it gets imported during build.
@@ -2434,7 +2434,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(2),l=__webpack_require__(8),B=__webpack_require__(3),C=__webpack_require__(1),ba=__webpack_require__(9),da=__webpack_require__(10),ea=__webpack_require__(11),fa=__webpack_require__(12),ia=__webpack_require__(13),D=__webpack_require__(4);
+var aa=__webpack_require__(1),l=__webpack_require__(8),B=__webpack_require__(3),C=__webpack_require__(2),ba=__webpack_require__(9),da=__webpack_require__(10),ea=__webpack_require__(11),fa=__webpack_require__(12),ia=__webpack_require__(13),D=__webpack_require__(4);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -2731,12 +2731,12 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var React = __webpack_require__(2);
+var React = __webpack_require__(1);
 var invariant = __webpack_require__(5);
 var warning = __webpack_require__(6);
 var ExecutionEnvironment = __webpack_require__(8);
 var _assign = __webpack_require__(3);
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(2);
 var EventListener = __webpack_require__(9);
 var getActiveElement = __webpack_require__(10);
 var shallowEqual = __webpack_require__(11);
@@ -18280,7 +18280,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -18330,9 +18330,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _MovieGrid = __webpack_require__(29);
+
+var _MovieGrid2 = _interopRequireDefault(_MovieGrid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18343,7 +18347,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
-  component that handles 
+component responsive for rendering the entire page. 
+
+	grabs data from snagfilms api
+	renders MovieGrid component to display movies
+	renders options component that allows user to set options for how the movies should be displayed, and handles the updates
 **/
 var MoviePage = function (_React$Component) {
   _inherits(MoviePage, _React$Component);
@@ -18357,80 +18365,70 @@ var MoviePage = function (_React$Component) {
       movies: {}, //object returned from API, movies.film is an array containing an object for each movie
       status: "loading", //loading | error | ready
 
-      //url params: limit=10 & offset = 5 would return movies 5 through 15
+      //url params for api: e.g. limit=10 & offset = 5 would return movies 5 through 15
       limit: 11,
-      offset: 22,
+      offset: 33,
 
       displayType: "movie-list" //movie-list | movie-table
     };
     return _this;
   }
 
+  //displays the status if movie data is not ready, otherwise renders <MovieGrid> to display movie data
+
+
   _createClass(MoviePage, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "grid movie-page" },
+        'div',
+        { className: 'grid movie-page' },
         //if component is ready(done fetching data) render movies, otherwise rende status
         this.state.status == "ready" ? this.renderMovies() : this.renderStatus()
       );
     }
+
+    //render the status while movie data is still being retrieved from API, or when an error occurs
+
   }, {
-    key: "renderStatus",
+    key: 'renderStatus',
     value: function renderStatus() {
       return _react2.default.createElement(
-        "h1",
+        'h1',
         null,
         this.state.status
       );
     }
 
-    //create a list or grid(depending on state.displayType) and renders each movie element from state.movies.film array inside of it
+    //render a MovieGrid that displays the movie data retrieved from api
 
   }, {
-    key: "renderMovies",
+    key: 'renderMovies',
     value: function renderMovies() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        "div",
-        { className: this.state.displayType },
-        this.state.movies.film.map(function (movie) {
-          return _this2.renderMovie(movie);
-        })
-      );
-    }
-
-    //renders a single movie
-
-  }, {
-    key: "renderMovie",
-    value: function renderMovie(movie) {
-      return _react2.default.createElement(Movie, { title: movie.title });
+      return _react2.default.createElement(_MovieGrid2.default, { movies: this.state.movies.film, displayType: this.state.displayType });
     }
 
     /** 
-    send a get request to the snagfilms url, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
+    send a get request to the snagfilms api, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
     
     onError: set state.status to "error" so component can render an error message to user
     **/
 
   }, {
-    key: "componentDidMount",
+    key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this2 = this;
 
       fetch("http://www.snagfilms.com/apis/films.json?limit=" + this.state.limit + "&offset=" + this.state.offset).then(function (response) {
         return response.json();
       }).then(function (movies) {
         console.log(movies.films);
-        _this3.setState({
+        _this2.setState({
           movies: movies.films,
           status: "ready"
         });
       }).catch(function (err) {
-        _this3.setState({
+        _this2.setState({
           status: "error"
         });
       });
@@ -18440,19 +18438,192 @@ var MoviePage = function (_React$Component) {
   return MoviePage;
 }(_react2.default.Component);
 
+exports.default = MoviePage;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 /**
-  Stateless functional component for movies
-  each instance renders a grid element to display a single movie
+component that renders a css grid containing all of the movie objects. Each individual movie is rendered inside a <Movie> component which displays the movies details inside a nested css grid
+
+props:
+	movies: [], an array of objects, with each object containing data about a single movie
+	displayType: a string that will equal either "movie-rows" or "movie-cells", displayType will be used as class name for the html element returned by this components render method.
+		"movie-list" will render each movie in its own row, creating a vertical list of movie elements
+		"movie table" will render each movie in a cell, with multiple cells on each row and multiple rows, creating a table of movie objects
+**/
+var MovieGrid = function (_React$Component) {
+	_inherits(MovieGrid, _React$Component);
+
+	function MovieGrid(props) {
+		_classCallCheck(this, MovieGrid);
+
+		return _possibleConstructorReturn(this, (MovieGrid.__proto__ || Object.getPrototypeOf(MovieGrid)).call(this, props));
+	}
+
+	//creates a grid and renders each movie as a <Movie> component inside of the grid
+
+
+	_createClass(MovieGrid, [{
+		key: "render",
+		value: function render() {
+			var _this2 = this;
+
+			console.log("MovieGrid movies:", this.props.movies);
+			return _react2.default.createElement(
+				"div",
+				{ className: this.props.displayType },
+				this.props.movies.map(function (movie) {
+					return _react2.default.createElement(Movie, {
+						title: movie.title,
+						key: movie.id,
+						image: _this2.getImage(movie),
+						year: movie.year == null ? "" : movie.year,
+						duration: _this2.getDuration(movie),
+						rating: movie.parentalRating,
+						tags: _this2.getTags(movie) //some tags aren't formatted properly when received from API - e.g. no spaces after commas, so this function will convert to an array to fix formatting and avoid type issues with empty tags
+					});
+				})
+			);
+		}
+	}, {
+		key: "getImage",
+		value: function getImage(movie) {
+			if (movie.images.image.length > 0) {
+				console.log("img: ", movie.images.image[0]);
+				return movie.images.image[0];
+			} else {
+				console.log("no images: ", movie.images.image);
+				//TODO: create a general 'no image' image and return that when movie doesn't have any images
+				return "";
+			}
+		}
+	}, {
+		key: "getDuration",
+		value: function getDuration(movie) {
+			var hours = Math.round(movie.durationMinutes / 60);
+			if (hours == 0) hours = "";else hours = hours + "h ";
+
+			var minutes = movie.durationMinutes % 60 + "m ";
+			var seconds = movie.durationSeconds + "s";
+			console.log("time: ", hours + minutes + seconds);
+			return hours + minutes + seconds;
+		}
+
+		//convert tags to an array of strings, if tags is null return an empty array so no typechecking is needed later when using the tag property
+
+	}, {
+		key: "getTags",
+		value: function getTags(movie) {
+			if (movie.tags != null) {
+
+				var tags = movie.tags.split(",");
+
+				if (tags[tags.length - 1] == "") {
+					tags.splice(-1, 1);
+				}
+
+				return tags;
+			} else {
+				return ["none"];
+			}
+		}
+	}]);
+
+	return MovieGrid;
+}(_react2.default.Component);
+
+/**
+Stateless functional component for movies
+each instance renders a grid element to display a single movie
   
-  -props: title:String, author:String, runtime:Number, tags:[String],
+props: title:String, author:String, runtime:Number, tags:[String],
 **/
 
 
 var Movie = function Movie(props) {
-  return _react2.default.createElement("div", { className: "movie-item" });
+	return _react2.default.createElement(
+		"div",
+		{ className: "movie-item" },
+		_react2.default.createElement(
+			"div",
+			{ className: "image" },
+			_react2.default.createElement("img", { src: props.image.src })
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "title" },
+			_react2.default.createElement(
+				"div",
+				{ className: "name" },
+				props.title
+			),
+			_react2.default.createElement(
+				"div",
+				{ className: "year" },
+				props.year == null ? "No Date" : props.year
+			)
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "spec" },
+			"Rated",
+			_react2.default.createElement(
+				"span",
+				{ className: "spec-data" },
+				props.rating
+			)
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "spec" },
+			"Duration",
+			_react2.default.createElement(
+				"span",
+				{ className: "spec-data" },
+				props.duration
+			)
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "tags" },
+			_react2.default.createElement(
+				"span",
+				null,
+				"Tags: "
+			),
+
+			//fix formatting for all tags
+			props.tags.map(function (tag) {
+				return tag + ", ";
+			})
+		)
+	);
 };
 
-exports.default = MoviePage;
+exports.default = MovieGrid;
 
 /***/ })
 /******/ ]);

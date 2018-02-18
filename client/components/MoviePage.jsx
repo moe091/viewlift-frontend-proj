@@ -1,7 +1,12 @@
 import React from 'react';
+import MovieGrid from './MovieGrid.jsx';
 
 /**
-  component that handles 
+component responsive for rendering the entire page. 
+
+	grabs data from snagfilms api
+	renders MovieGrid component to display movies
+	renders options component that allows user to set options for how the movies should be displayed, and handles the updates
 **/
 class MoviePage extends React.Component {
 	
@@ -11,14 +16,15 @@ class MoviePage extends React.Component {
       movies: {}, //object returned from API, movies.film is an array containing an object for each movie
       status: "loading", //loading | error | ready
       
-      //url params: limit=10 & offset = 5 would return movies 5 through 15
+      //url params for api: e.g. limit=10 & offset = 5 would return movies 5 through 15
       limit: 11,
-      offset: 22,
+      offset: 33,
       
       displayType: "movie-list" //movie-list | movie-table
     }
   }
 
+	//displays the status if movie data is not ready, otherwise renders <MovieGrid> to display movie data
   render() {
     return (
       <div className="grid movie-page">
@@ -32,30 +38,19 @@ class MoviePage extends React.Component {
     )
   }
 
+	//render the status while movie data is still being retrieved from API, or when an error occurs
   renderStatus() {
     return <h1>{this.state.status}</h1>
   }
   
-  //create a list or grid(depending on state.displayType) and renders each movie element from state.movies.film array inside of it
+  //render a MovieGrid that displays the movie data retrieved from api
   renderMovies() {
-    return (
-      <div className={this.state.displayType}>
-        {
-          this.state.movies.film.map((movie) => {
-            return this.renderMovie(movie)
-          })
-        }
-      </div>
-    )
+    return <MovieGrid movies={this.state.movies.film} displayType={this.state.displayType} />
   }
-  
-  //renders a single movie
-  renderMovie(movie) { 
-    return <Movie title={movie.title} />
-  }
+
   
   /** 
-  send a get request to the snagfilms url, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
+  send a get request to the snagfilms api, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
   
   onError: set state.status to "error" so component can render an error message to user
   **/
@@ -76,20 +71,6 @@ class MoviePage extends React.Component {
   }
 }
 
-/**
-  Stateless functional component for movies
-  each instance renders a grid element to display a single movie
-  
-  -props: title:String, author:String, runtime:Number, tags:[String],
-**/
-const Movie = function(props) {
-    return (
-      <div className="movie-item">
-        
-      </div>
-    )
-  
-}
 
 
 export default MoviePage;

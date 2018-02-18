@@ -1,0 +1,105 @@
+.movie-list {
+	display: grid;  
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+
+/** movie item general layout rules **/
+.movie-list .movie-item {
+	display: grid;
+	grid-template-columns: auto repeat(5, 1fr); 
+	grid-template-rows: 72px 60px 36px 60px 120px; 
+}
+
+.movie-list .movie-item:nth-child(odd) { 
+}
+
+
+/** movie item internal layout rules **/
+
+
+/** ---Title--- **/
+.movie-list .movie-item .title {
+	box-sizing: border-box;
+	display: grid;
+	grid-template-rows: auto auto;
+	grid-column-start: 2;
+	grid-column-end: end;
+	padding-left: 6px;
+	font-family: 'Josefin Sans', sans-serif;
+	width: 100%;
+	height: 100%;
+	background-color: #282828;
+	color: #fff;
+}
+
+.movie-list .title .name { /** leaving in uneccessary container tags such as '.title' and '.image' on purpose to remind me where these elements are **/
+	font-size: 2em; 
+	line-height: 2em;
+	max-height: 2em;
+	overflow: hidden;
+}
+.movie-list .title .year {
+	font-style: italic;
+}
+
+
+/** ---Image--- **/
+.movie-list .image {
+	grid-column-start: 1;
+	grid-column-end: 2;
+	grid-row-start: 1;
+	grid-row-end: 5; 
+}
+.movie-list .image img {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+
+
+/** ---Rating--- **/
+.movie-list .spec {
+	color: #666; 
+	font-size: 1.2em;
+	align-self: center;
+	justify-self: center;
+}
+
+
+.movie-list .spec .spec-data {
+	display: block;
+	padding: 3px;
+	border: 2px #666 solid;
+	text-align: center;
+	margin-top: 4px;
+}
+
+
+
+/** ---Tags--- **/
+.movie-list .tags {
+	grid-column-start: 2;
+	grid-column-end: end;
+	grid-row-start: 3;
+	grid-row-end: 4;
+	
+	font-family: 'Nunito Sans', sans-serif;
+	font-style: italic;
+	font-size: 20px;
+	justify-self: center;
+	align-self: center;
+	padding: 8px;
+}
+.movie-list .tags span {
+	font-weight: bold;
+	font-style: normal;
+}
+
+
+
+
+
+
+
