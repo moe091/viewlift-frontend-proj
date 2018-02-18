@@ -959,8 +959,6 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), do
                                                                                                                   webpack entry file
                                                                                                                 */
 
-console.log("App:", _App2.default);
-
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18327,7 +18325,7 @@ exports.default = App;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18344,32 +18342,115 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+  component that handles 
+**/
 var MoviePage = function (_React$Component) {
-	_inherits(MoviePage, _React$Component);
+  _inherits(MoviePage, _React$Component);
 
-	function MoviePage(props) {
-		_classCallCheck(this, MoviePage);
+  function MoviePage(props) {
+    _classCallCheck(this, MoviePage);
 
-		return _possibleConstructorReturn(this, (MoviePage.__proto__ || Object.getPrototypeOf(MoviePage)).call(this, props));
-	}
+    var _this = _possibleConstructorReturn(this, (MoviePage.__proto__ || Object.getPrototypeOf(MoviePage)).call(this, props));
 
-	_createClass(MoviePage, [{
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "movie-page" },
-				_react2.default.createElement(
-					"h1",
-					null,
-					"Movie Page"
-				)
-			);
-		}
-	}]);
+    _this.state = {
+      movies: {}, //object returned from API, movies.film is an array containing an object for each movie
+      status: "loading", //loading | error | ready
 
-	return MoviePage;
+      //url params: limit=10 & offset = 5 would return movies 5 through 15
+      limit: 11,
+      offset: 22,
+
+      displayType: "movie-list" //movie-list | movie-table
+    };
+    return _this;
+  }
+
+  _createClass(MoviePage, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "grid movie-page" },
+        //if component is ready(done fetching data) render movies, otherwise rende status
+        this.state.status == "ready" ? this.renderMovies() : this.renderStatus()
+      );
+    }
+  }, {
+    key: "renderStatus",
+    value: function renderStatus() {
+      return _react2.default.createElement(
+        "h1",
+        null,
+        this.state.status
+      );
+    }
+
+    //create a list or grid(depending on state.displayType) and renders each movie element from state.movies.film array inside of it
+
+  }, {
+    key: "renderMovies",
+    value: function renderMovies() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        "div",
+        { className: this.state.displayType },
+        this.state.movies.film.map(function (movie) {
+          return _this2.renderMovie(movie);
+        })
+      );
+    }
+
+    //renders a single movie
+
+  }, {
+    key: "renderMovie",
+    value: function renderMovie(movie) {
+      return _react2.default.createElement(Movie, { title: movie.title });
+    }
+
+    /** 
+    send a get request to the snagfilms url, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
+    
+    onError: set state.status to "error" so component can render an error message to user
+    **/
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      fetch("http://www.snagfilms.com/apis/films.json?limit=" + this.state.limit + "&offset=" + this.state.offset).then(function (response) {
+        return response.json();
+      }).then(function (movies) {
+        console.log(movies.films);
+        _this3.setState({
+          movies: movies.films,
+          status: "ready"
+        });
+      }).catch(function (err) {
+        _this3.setState({
+          status: "error"
+        });
+      });
+    }
+  }]);
+
+  return MoviePage;
 }(_react2.default.Component);
+
+/**
+  Stateless functional component for movies
+  each instance renders a grid element to display a single movie
+  
+  -props: title:String, author:String, runtime:Number, tags:[String],
+**/
+
+
+var Movie = function Movie(props) {
+  return _react2.default.createElement("div", { className: "movie-item" });
+};
 
 exports.default = MoviePage;
 

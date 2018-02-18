@@ -2,7 +2,8 @@
   "name": "viewlift-proj",
   "scripts": {
     "start": "webpack-dev-server",
-		"build": "yarn webpack"
+    "build": "yarn webpack",
+    "watch": "yarn webpack --watch" 
   },
   "version": "1.0.0",
   "description": "viewlift frontend assignment - create a page with react that displays the JSON data from the given snagfilms.com URL in a css grid layout",
