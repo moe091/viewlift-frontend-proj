@@ -1,0 +1,25 @@
+{
+  "name": "viewlift-proj",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "version": "1.0.0",
+  "description": "viewlift frontend assignment - create a page with react that displays the JSON data from the given snagfilms.com URL in a css grid layout",
+  "main": "index.js",
+  "repository": "https://github.com/moe091/viewlift-frontend-proj.git",
+  "author": "Maurice Nowicki",
+  "license": "MIT",
+  "dependencies": {
+    "path": "^0.12.7",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
+  }
+}
