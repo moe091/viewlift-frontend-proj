@@ -18338,6 +18338,10 @@ var _MovieGrid = __webpack_require__(29);
 
 var _MovieGrid2 = _interopRequireDefault(_MovieGrid);
 
+var _MovieOptions = __webpack_require__(30);
+
+var _MovieOptions2 = _interopRequireDefault(_MovieOptions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18367,7 +18371,7 @@ var MoviePage = function (_React$Component) {
 
       //url params for api: e.g. limit=10 & offset = 5 would return movies 5 through 15
       limit: 11,
-      offset: 33,
+      offset: 300,
 
       displayType: "movie-list" //movie-list | movie-table
     };
@@ -18383,6 +18387,7 @@ var MoviePage = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'grid movie-page' },
+        _react2.default.createElement(_MovieOptions2.default, { limit: this.state.limit, offset: this.state.offset, limitChangeHandler: this.limitChangeHandler.bind(this), pageChangeHandler: this.pageChangeHandler.bind(this) }),
         //if component is ready(done fetching data) render movies, otherwise rende status
         this.state.status == "ready" ? this.renderMovies() : this.renderStatus()
       );
@@ -18408,6 +18413,30 @@ var MoviePage = function (_React$Component) {
       return _react2.default.createElement(_MovieGrid2.default, { movies: this.state.movies.film, displayType: this.state.displayType });
     }
 
+    //callback for changing limit(how many movies are displayed). set as onChange handler for limit input directly
+
+  }, {
+    key: 'limitChangeHandler',
+    value: function limitChangeHandler(e) {
+      this.setState({
+        limit: e.target.value
+      });
+    }
+  }, {
+    key: 'pageChangeHandler',
+    value: function pageChangeHandler(e) {
+      var _this2 = this;
+
+      if (Number(e.target.value) != NaN && Number(e.target.value) != 0) {
+        this.setState({
+          page: Number(e.target.value),
+          offset: Number(e.target.value) * this.state.limit
+        }, function (p) {
+          console.log("updated state. page:" + _this2.state.page + ", offset:" + _this2.state.offset, p);
+        }); //call ajax in setState callback(second param) - or use componentWillUpdate
+      }
+    }
+
     /** 
     send a get request to the snagfilms api, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
     
@@ -18417,18 +18446,18 @@ var MoviePage = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
+      var _this3 = this;
 
       fetch("http://www.snagfilms.com/apis/films.json?limit=" + this.state.limit + "&offset=" + this.state.offset).then(function (response) {
         return response.json();
       }).then(function (movies) {
         console.log(movies.films);
-        _this2.setState({
+        _this3.setState({
           movies: movies.films,
           status: "ready"
         });
       }).catch(function (err) {
-        _this2.setState({
+        _this3.setState({
           status: "error"
         });
       });
@@ -18448,7 +18477,7 @@ exports.default = MoviePage;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18475,84 +18504,86 @@ props:
 		"movie table" will render each movie in a cell, with multiple cells on each row and multiple rows, creating a table of movie objects
 **/
 var MovieGrid = function (_React$Component) {
-	_inherits(MovieGrid, _React$Component);
+  _inherits(MovieGrid, _React$Component);
 
-	function MovieGrid(props) {
-		_classCallCheck(this, MovieGrid);
+  function MovieGrid(props) {
+    _classCallCheck(this, MovieGrid);
 
-		return _possibleConstructorReturn(this, (MovieGrid.__proto__ || Object.getPrototypeOf(MovieGrid)).call(this, props));
-	}
+    return _possibleConstructorReturn(this, (MovieGrid.__proto__ || Object.getPrototypeOf(MovieGrid)).call(this, props));
+  }
 
-	//creates a grid and renders each movie as a <Movie> component inside of the grid
+  //creates a grid and renders each movie as a <Movie> component inside of the grid
 
 
-	_createClass(MovieGrid, [{
-		key: "render",
-		value: function render() {
-			var _this2 = this;
+  _createClass(MovieGrid, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
 
-			console.log("MovieGrid movies:", this.props.movies);
-			return _react2.default.createElement(
-				"div",
-				{ className: this.props.displayType },
-				this.props.movies.map(function (movie) {
-					return _react2.default.createElement(Movie, {
-						title: movie.title,
-						key: movie.id,
-						image: _this2.getImage(movie),
-						year: movie.year == null ? "" : movie.year,
-						duration: _this2.getDuration(movie),
-						rating: movie.parentalRating,
-						tags: _this2.getTags(movie) //some tags aren't formatted properly when received from API - e.g. no spaces after commas, so this function will convert to an array to fix formatting and avoid type issues with empty tags
-					});
-				})
-			);
-		}
-	}, {
-		key: "getImage",
-		value: function getImage(movie) {
-			if (movie.images.image.length > 0) {
-				console.log("img: ", movie.images.image[0]);
-				return movie.images.image[0];
-			} else {
-				console.log("no images: ", movie.images.image);
-				//TODO: create a general 'no image' image and return that when movie doesn't have any images
-				return "";
-			}
-		}
-	}, {
-		key: "getDuration",
-		value: function getDuration(movie) {
-			var hours = Math.round(movie.durationMinutes / 60);
-			if (hours == 0) hours = "";else hours = hours + "h ";
+      console.log("MovieGrid movies:", this.props.movies);
+      return _react2.default.createElement(
+        "div",
+        { className: this.props.displayType },
+        this.props.movies.map(function (movie, index) {
+          return _react2.default.createElement(Movie, {
+            title: movie.title,
+            key: movie.id,
+            id: movie.id,
+            index: index,
+            image: _this2.getImage(movie),
+            year: movie.year == null ? "" : movie.year,
+            duration: _this2.getDuration(movie),
+            rating: movie.parentalRating,
+            geoRestrictions: movie.geoRestrictions,
+            tags: _this2.getTags(movie) //some tags aren't formatted properly when received from API - e.g. no spaces after commas, so this function will convert to an array to fix formatting and avoid type issues with empty tags
+            , relatedFilms: movie.relatedFilms.relatedFilm ? movie.relatedFilms.relatedFilm : []
+          });
+        })
+      );
+    }
+  }, {
+    key: "getImage",
+    value: function getImage(movie) {
+      if (movie.images.image.length > 0) {
+        return movie.images.image[0];
+      } else {
+        //TODO: create a general 'no image' image and return that when movie doesn't have any images
+        return "";
+      }
+    }
+  }, {
+    key: "getDuration",
+    value: function getDuration(movie) {
+      var hours = Math.round(movie.durationMinutes / 60);
+      if (hours == 0) hours = "";else hours = hours + "h ";
 
-			var minutes = movie.durationMinutes % 60 + "m ";
-			var seconds = movie.durationSeconds + "s";
-			console.log("time: ", hours + minutes + seconds);
-			return hours + minutes + seconds;
-		}
+      var minutes = movie.durationMinutes % 60 + "m ";
+      var seconds = movie.durationSeconds + "s";
+      console.log("time: ", hours + minutes + seconds);
+      return hours + minutes + seconds;
+    }
 
-		//convert tags to an array of strings, if tags is null return an empty array so no typechecking is needed later when using the tag property
+    //convert tags to an array of strings, if tags is null return an empty array so no typechecking is needed later when using the tag property
 
-	}, {
-		key: "getTags",
-		value: function getTags(movie) {
-			if (movie.tags != null) {
+  }, {
+    key: "getTags",
+    value: function getTags(movie) {
+      if (movie.tags != null) {
 
-				var tags = movie.tags.split(",");
+        var tags = movie.tags.split(",");
 
-				if (tags[tags.length - 1] == "") {
-					tags.splice(-1, 1);
-				}
+        if (tags[tags.length - 1] == "") {
+          tags.splice(-1, 1);
+        }
 
-				return tags;
-			} else {
-				return ["none"];
-			}
-		}
-	}]);
+        return tags;
+      } else {
+        return ["none"];
+      }
+    }
+  }]);
 
-	return MovieGrid;
+  return MovieGrid;
 }(_react2.default.Component);
 
 /**
@@ -18563,67 +18594,209 @@ props: title:String, author:String, runtime:Number, tags:[String],
 **/
 
 
-var Movie = function Movie(props) {
-	return _react2.default.createElement(
-		"div",
-		{ className: "movie-item" },
-		_react2.default.createElement(
-			"div",
-			{ className: "image" },
-			_react2.default.createElement("img", { src: props.image.src })
-		),
-		_react2.default.createElement(
-			"div",
-			{ className: "title" },
-			_react2.default.createElement(
-				"div",
-				{ className: "name" },
-				props.title
-			),
-			_react2.default.createElement(
-				"div",
-				{ className: "year" },
-				props.year == null ? "No Date" : props.year
-			)
-		),
-		_react2.default.createElement(
-			"div",
-			{ className: "spec" },
-			"Rated",
-			_react2.default.createElement(
-				"span",
-				{ className: "spec-data" },
-				props.rating
-			)
-		),
-		_react2.default.createElement(
-			"div",
-			{ className: "spec" },
-			"Duration",
-			_react2.default.createElement(
-				"span",
-				{ className: "spec-data" },
-				props.duration
-			)
-		),
-		_react2.default.createElement(
-			"div",
-			{ className: "tags" },
-			_react2.default.createElement(
-				"span",
-				null,
-				"Tags: "
-			),
+var Movie = function (_React$Component2) {
+  _inherits(Movie, _React$Component2);
 
-			//fix formatting for all tags
-			props.tags.map(function (tag) {
-				return tag + ", ";
-			})
-		)
-	);
+  function Movie() {
+    _classCallCheck(this, Movie);
+
+    return _possibleConstructorReturn(this, (Movie.__proto__ || Object.getPrototypeOf(Movie)).apply(this, arguments));
+  }
+
+  _createClass(Movie, [{
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      return _react2.default.createElement(
+        "div",
+        { key: this.props.id, className: "movie-item" },
+        _react2.default.createElement(
+          "div",
+          { className: "image", onClick: this.createClickHandler(this.props.title) },
+          _react2.default.createElement("img", { src: this.props.image.src })
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "title" },
+          _react2.default.createElement(
+            "div",
+            { className: "name pointer-cursor", onClick: this.createClickHandler(this.props.title) },
+            this.props.title
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "year" },
+            this.props.year == null ? "No Date" : this.props.year
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "spec" },
+          "Rated",
+          _react2.default.createElement(
+            "span",
+            { className: "spec-data" },
+            this.props.rating
+          )
+        ),
+        _react2.default.createElement("div", null),
+        _react2.default.createElement(
+          "div",
+          { className: "spec" },
+          "Duration",
+          _react2.default.createElement(
+            "span",
+            { className: "spec-data" },
+            this.props.duration
+          )
+        ),
+        _react2.default.createElement("div", null),
+        _react2.default.createElement(
+          "div",
+          { className: "spec" },
+          _react2.default.createElement(
+            "span",
+            { className: "spec-data" },
+            this.props.geoRestrictions
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "tags" },
+          _react2.default.createElement(
+            "span",
+            null,
+            "Tags: "
+          ),
+
+          //fix formatting for all tags
+          this.props.tags.map(function (tag) {
+            return tag + ", ";
+          })
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "related-label" },
+          "Related Films:"
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "related-films" },
+          this.props.relatedFilms.map(function (film) {
+            return _react2.default.createElement(RelatedFilm, { key: _this4.props.id + "-" + film.id, images: film.images.image, title: film.title, clickHandler: _this4.createClickHandler(film.title) });
+          })
+        )
+      );
+    }
+
+    /**
+    creates a function for each film to be used as the onClick callback for that film. 
+    would usually navigate to that films page or something but this is just a single page demo and I don't have access to the full API.
+    
+    I would usually pass in the films id(or whatever value is used to retrieve the film from the backend) as a parameter here, so that the function could make an ajax call(either POST with the film id passed in the request body, or GET with the film as a url param) and then render the film component with the data returned from the ajax request.
+    
+    since it just navigates to a films page, it can be used when a relatedFilm or a regular film is clicked
+    **/
+
+  }, {
+    key: "createClickHandler",
+    value: function createClickHandler(title) {
+      return function () {
+        alert("This link would usually navigate to a page for:\n\n'" + title + "'\n\nbut I don't have access to the whole API and this is only a demo");
+      }.bind(this); //technically this doesn't need to be bound since it's just creating an alert, but if it had real functionality this would be necessary
+    }
+  }]);
+
+  return Movie;
+}(_react2.default.Component);
+
+//small stateless functional component to display relatedFilms
+
+
+var RelatedFilm = function RelatedFilm(props) {
+  return _react2.default.createElement(
+    "div",
+    { className: "related-film pointer-cursor", onClick: props.clickHandler },
+    _react2.default.createElement("img", { src: props.images[0].src }),
+    _react2.default.createElement(
+      "div",
+      { className: "related-overlay" },
+      props.title
+    )
+  );
 };
 
 exports.default = MovieGrid;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MovieOptions = function (_React$Component) {
+  _inherits(MovieOptions, _React$Component);
+
+  function MovieOptions(props) {
+    _classCallCheck(this, MovieOptions);
+
+    return _possibleConstructorReturn(this, (MovieOptions.__proto__ || Object.getPrototypeOf(MovieOptions)).call(this, props));
+  }
+
+  _createClass(MovieOptions, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "movie-options" },
+        _react2.default.createElement(
+          "div",
+          { className: "limit-label" },
+          "Movies Per Page: "
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "limit-option" },
+          _react2.default.createElement("input", { type: "text", value: this.props.limit, onChange: this.props.limitChangeHandler })
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "page-label" },
+          "Page: "
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "page-option" },
+          _react2.default.createElement("input", { type: "text", value: this.props.page, onChange: this.props.pageChangeHandler.bind(this) })
+        )
+      );
+    }
+  }]);
+
+  return MovieOptions;
+}(_react2.default.Component);
+
+exports.default = MovieOptions;
 
 /***/ })
 /******/ ]);

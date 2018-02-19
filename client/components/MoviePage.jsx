@@ -1,5 +1,6 @@
 import React from 'react';
 import MovieGrid from './MovieGrid.jsx';
+import MovieOptions from './MovieOptions.jsx';
 
 /**
 component responsive for rendering the entire page. 
@@ -18,7 +19,7 @@ class MoviePage extends React.Component {
       
       //url params for api: e.g. limit=10 & offset = 5 would return movies 5 through 15
       limit: 11,
-      offset: 33,
+      offset: 300,
       
       displayType: "movie-list" //movie-list | movie-table
     }
@@ -28,6 +29,7 @@ class MoviePage extends React.Component {
   render() {
     return (
       <div className="grid movie-page">
+        <MovieOptions limit={this.state.limit} offset={this.state.offset} limitChangeHandler={this.limitChangeHandler.bind(this)} pageChangeHandler={this.pageChangeHandler.bind(this)} />
         { //if component is ready(done fetching data) render movies, otherwise rende status
           (this.state.status == "ready") ?
             this.renderMovies()
@@ -48,6 +50,21 @@ class MoviePage extends React.Component {
     return <MovieGrid movies={this.state.movies.film} displayType={this.state.displayType} />
   }
 
+  //callback for changing limit(how many movies are displayed). set as onChange handler for limit input directly
+  limitChangeHandler(e) {
+    this.setState({
+      limit: e.target.value
+    });
+  }
+  
+  pageChangeHandler(e) {
+    if (Number(e.target.value) != NaN && Number(e.target.value) != 0) {
+      this.setState({
+        page: Number(e.target.value),
+        offset: Number(e.target.value) * this.state.limit
+      }, (p) => {console.log("updated state. page:" + this.state.page + ", offset:" + this.state.offset, p)}); //call ajax in setState callback(second param) - or use componentWillUpdate
+    }
+  }
   
   /** 
   send a get request to the snagfilms api, plugging in limit/offset url params from state for pagination, then converts the response stream into JSON and updates state
