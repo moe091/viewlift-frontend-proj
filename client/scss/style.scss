@@ -1,5 +1,23 @@
+$col1: 90px;
+$col2: 90px;
+$col3: 144px;
+
+$row1: 198px;
+$row2: 40px;
+$row3: 32px;
+$row4: 96px;
+
+$total-width: $col1 + $col2 + $col3;
+$total-height: $row1 + $row2 + $row3 + $row4;
+
+$img-top-pad: 12px;
+
+$dark-gray: #262626;
+
+
 html {
-  background-color: #ddd; }
+  background-color: #ddd;
+}
 
 .movie-list {
   display: grid;
@@ -7,25 +25,29 @@ html {
   justify-content: center;
   align-content: center;
   grid-row-gap: 50px;
-  grid-column-gap: 32px; }
-  .movie-list .movie-item {
+  grid-column-gap: 32px;
+  
+  .movie-item {
     display: grid;
-    grid-template-columns: 90px 90px 144px;
-    grid-template-rows: 198px 40px 32px 96px;
+    grid-template-columns: $col1 $col2 $col3;
+    grid-template-rows: $row1 $row2 $row3 $row4;
     grid-row-gap: 8px;
     justify-content: center;
     align-content: center;
-    background-color: #fff; }
-    .movie-list .movie-item .image {
+    background-color: #fff;
+     
+    .image {
       grid-column-start: 1;
       grid-column-end: 4;
       grid-row-start: 1;
       grid-row-end: 2;
-      padding-top: 12px; }
-      .movie-list .movie-item .image img {
-        width: 324px;
-        height: 186px; }
-    .movie-list .movie-item .title {
+      padding-top: $img-top-pad;
+      img {
+        width: $total-width;
+        height: $row1 - $img-top-pad;
+      }
+    }
+    .title {
       margin-top: -8px;
       padding: 4px;
       grid-column-start: 1;
@@ -36,33 +58,42 @@ html {
       font-family: 'Nunito Sans', sans-serif;
       background-color: #000;
       color: #fff;
-      font-weight: bold; }
-    .movie-list .movie-item .spec {
+      font-weight: bold;
+    }
+    .spec {
       grid-row-start: 3;
       grid-row-end: 4;
       display: flex;
-      justify-content: center; }
-      .movie-list .movie-item .spec span {
+      justify-content: center;
+      span {
         font-size: 14px;
         font-family: 'Josefin Sans', sans-serif;
         width: auto;
         padding: 8px 12px;
         color: #333;
-        border: 2px #333 solid; }
-    .movie-list .movie-item .tags {
+        border: 2px #333 solid;
+      }
+    }
+    .tags {
       grid-row-start: 4;
       grid-row-end: 4;
       grid-column-start: 1;
       grid-column-end: 4;
+      
       font-size: 17px;
       font-family: 'Bree Serif', serif;
-      font-style: italic; }
-      .movie-list .movie-item .tags span {
+      font-style: italic;
+      span {
         font-weight: bold;
-        font-style: normal; }
-    .movie-list .movie-item .related-films, .movie-list .movie-item .related-label {
-      display: none; }
-
+        font-style: normal;
+      }
+    }
+    .related-films, .related-label {
+      display: none;
+    }
+  }
+}
+  
 /**
 
   font-family: 'Nunito Sans', sans-serif;

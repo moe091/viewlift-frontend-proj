@@ -20,6 +20,8 @@ class MoviePage extends React.Component {
       //url params for api: e.g. limit=10 & offset = 5 would return movies 5 through 15
       limit: 11,
       offset: 300,
+      page: 1,
+      loading: true,
       
       displayType: "movie-list" //movie-list | movie-table
     }
@@ -29,7 +31,14 @@ class MoviePage extends React.Component {
   render() {
     return (
       <div className="grid movie-page">
-        <MovieOptions limit={this.state.limit} offset={this.state.offset} limitChangeHandler={this.limitChangeHandler.bind(this)} pageChangeHandler={this.pageChangeHandler.bind(this)} />
+        <MovieOptions limit={this.state.limit} offset={this.state.offset} page={this.state.page} limitChangeHandler={this.limitChangeHandler.bind(this)} pageChangeHandler={this.pageChangeHandler.bind(this)} lastPageHandler={this.lastPageHandler.bind(this)} nextPageHandler={this.nextPageHandler.bind(this)} />
+        {
+          (this.state.loading) 
+          ?
+            <h1 className="loading-label">Loading...</h1>
+          :
+            <h1 className="loading-label">Page {this.state.page}</h1>
+        }
         { //if component is ready(done fetching data) render movies, otherwise rende status
           (this.state.status == "ready") ?
             this.renderMovies()
@@ -42,7 +51,11 @@ class MoviePage extends React.Component {
 
 	//render the status while movie data is still being retrieved from API, or when an error occurs
   renderStatus() {
-    return <h1>{this.state.status}</h1>
+    if (this.state.status != "loading" && this.state.status != "ready") {
+      return <h1>{this.state.status}</h1>
+    } else {
+      return null;
+    }
   }
   
   //render a MovieGrid that displays the movie data retrieved from api
@@ -59,11 +72,29 @@ class MoviePage extends React.Component {
   
   pageChangeHandler(e) {
     if (Number(e.target.value) != NaN && Number(e.target.value) != 0) {
-      this.setState({
-        page: Number(e.target.value),
-        offset: Number(e.target.value) * this.state.limit
-      }, (p) => {console.log("updated state. page:" + this.state.page + ", offset:" + this.state.offset, p)}); //call ajax in setState callback(second param) - or use componentWillUpdate
+      this.setPage(e.target.value);
     }
+  }
+  lastPageHandler(e) {
+    if (this.state.page - 1 > 0) {
+      this.setPage(this.state.page - 1);
+    }
+  }
+  nextPageHandler(e) {
+    this.setPage(this.state.page + 1);
+  }
+  
+  setPage(page) {
+   this.setState({
+      page: Number(page),
+      offset: Number(page) * this.state.limit,
+      loading: true
+    }, (p) => {this.loadMovies()}); //call ajax in setState callback(second param) - or use componentWillUpdate
+  }
+  
+  //grab movie data from API when component mounts
+  componentDidMount() {
+    this.loadMovies();
   }
   
   /** 
@@ -71,20 +102,21 @@ class MoviePage extends React.Component {
   
   onError: set state.status to "error" so component can render an error message to user
   **/
-  componentDidMount() {
+  loadMovies() {
     fetch("http://www.snagfilms.com/apis/films.json?limit=" + this.state.limit + "&offset=" + this.state.offset)
     .then((response) => response.json())
     .then((movies) => {
       console.log(movies.films);
       this.setState({
         movies: movies.films,
-        status: "ready"
+        status: "ready",
+        loading: false
       });
     }).catch((err) => {
       this.setState({
         status: "error"
       });
-    });
+    });  
   }
 }
 

@@ -108,15 +108,11 @@ class Movie extends React.Component {
         	<div className="year">{(this.props.year == null) ? "No Date" : this.props.year}</div>
         </div>
         <div className="spec">
-        	Rated 
         	<span className="spec-data">{this.props.rating}</span>
         </div>
-        <div></div>
         <div className="spec">
-        	Duration 
         	<span className="spec-data">{this.props.duration}</span>
         </div>
-        <div></div>
         <div className="spec">
             <span className="spec-data">{this.props.geoRestrictions}</span>
         </div>

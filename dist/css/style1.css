@@ -1,0 +1,279 @@
+html {
+  background: url(../img/bg-texture.png);
+  background-repeat: repeat;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+.movie-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 56px auto;
+  max-width: 1200px;
+  margin-top: 32px;
+}
+
+
+
+
+.movie-options {
+  display: grid;
+  align-items: end;
+  grid-template-columns: auto repeat(4, 165px) auto;
+  font-size: 20px;
+  font-family: 'Josefin Sans', sans-serif;
+  padding-bottom: 8px;
+  background-color: #2a2a2a;
+  color: #fff;
+  border-top: 3px #000 solid;
+  border-bottom: 12px #fff solid;
+}
+.movie-options input {
+  font-size: 18px;
+  font-family: 'Josefin Sans', sans-serif;
+  padding: 4px 4px 0 4px;
+  width: 4em;
+  height: 28px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.limit-label {
+  justify-self: right;
+  padding-right: 8px;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.limit-options {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.page-label {
+  justify-self: right;
+  padding-right: 8px;
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+.page-options {
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
+.page-option {
+  display: flex;
+}
+.page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 28px;
+  width: 1em;
+  text-align: center;
+  border: 1px #eee solid; 
+  font-size: 32px;
+}
+
+
+.loading-label {
+  padding: 20px;
+  font-size: 36px;
+  font-family: 'Bree Serif', serif;
+  background-color: #fff;
+}
+
+
+
+.movie-list {
+	display: grid;  
+    grid-row-gap: 60px;
+	max-width: 1200px;
+	margin: 0 auto;
+    padding: 0 16px;
+    background-color: #fff;
+}
+
+
+/** movie item general layout rules **/
+.movie-list .movie-item {
+	display: grid;
+	grid-template-columns: auto repeat(5, 1fr) 8px; 
+	grid-template-rows: 72px 72px 84px 48px 48px; 
+    grid-gap: 0;
+  
+    background-color: #282828;
+    border-bottom: 8px #2a2a2a solid;
+}
+
+.movie-list .movie-item:nth-child(odd) { 
+}
+
+
+/** movie item internal layout rules **/
+
+
+/** ---Title--- **/
+.movie-list .movie-item .title {
+	box-sizing: border-box;
+	display: grid;
+	grid-template-rows: auto auto;
+	grid-column-start: 2;
+	grid-column-end: end;
+	padding-left: 6px;
+	font-family: 'Josefin Sans', sans-serif;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	color: #fff;
+}
+
+.movie-list .title .name { /** leaving in uneccessary container tags such as '.title' and '.image' on purpose to remind me where these elements are **/
+	font-size: 2em; 
+	line-height: 2em;
+	max-height: 2em;
+	overflow: hidden;
+}
+.movie-list .title .year {
+	font-style: italic;
+}
+
+
+/** ---Image--- **/
+.movie-list .image {
+	grid-column-start: 1;
+	grid-column-end: 2;
+	grid-row-start: 1;
+	grid-row-end: 5; 
+  
+    width: 540px;
+    height: 300px;
+}
+.movie-list .image img {
+	max-height: 100%;
+	max-width: 100%;
+    border: 24px #fff solid;
+    border-bottom: none;
+    border-top: none;
+    box-sizing: border-box;
+    width: 540px;
+    height: 300px;
+}
+
+
+
+/** ---Rating--- **/
+.movie-list .spec {
+    color: #bebebe;
+	font-size: 1.2em;
+	align-self: center;
+	justify-self: center;
+}
+
+
+.movie-list .spec .spec-data {
+	display: block;
+	padding: 3px;
+	border: 2px #666 solid;
+	text-align: center;
+	margin-top: 4px;
+}
+
+
+
+/** ---Tags--- **/
+.movie-list .tags {
+	grid-column-start: 2;
+	grid-column-end: end;
+	grid-row-start: 3;
+	grid-row-end: 4;
+	
+	font-family: 'Nunito Sans', sans-serif;
+	font-style: italic;
+	font-size: 20px;
+	justify-self: center;
+	align-self: start;
+	padding: 8px;
+    color: #bebebe;
+    line-height: 1.2em;
+    max-height: 2em;
+    overflow: hidden;
+}
+.movie-list .tags span {
+	font-weight: bold;
+	font-style: normal;
+}
+
+
+/** ---Related Films---**/
+.related-label {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%; 
+  justify-content: flex-end;
+  padding-right: 12px; 
+  padding-bottom: 6px;
+  
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 6;
+  grid-row-end: end;
+  
+  font-size: 28px;
+  font-family: 'Bree Serif', serif;
+  color: #fff;
+}
+.movie-list .related-films {
+  grid-column-start: 2;
+  grid-column-end: 7;
+  grid-row-start: 4;
+  grid-row-end: end;
+  display: flex;
+  overflow: hidden;
+}
+
+.movie-list .related-films img {
+  width: 180px;
+  height: 150px;
+  margin: 0 4px;
+}
+
+.related-film {
+  height: 120px;
+  position: relative;
+}
+.related-overlay {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 2px 8px;
+  overflow: hidden;
+  
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  line-height 24px;
+  height: 42px;
+}
+
+
+
+
+
+
+/** ---General Classes--- **/
+.pointer-cursor {
+  cursor: pointer;
+}
+
+
+
+
+
+
+

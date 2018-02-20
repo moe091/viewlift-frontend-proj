@@ -18372,6 +18372,8 @@ var MoviePage = function (_React$Component) {
       //url params for api: e.g. limit=10 & offset = 5 would return movies 5 through 15
       limit: 11,
       offset: 300,
+      page: 1,
+      loading: true,
 
       displayType: "movie-list" //movie-list | movie-table
     };
@@ -18387,7 +18389,17 @@ var MoviePage = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'grid movie-page' },
-        _react2.default.createElement(_MovieOptions2.default, { limit: this.state.limit, offset: this.state.offset, limitChangeHandler: this.limitChangeHandler.bind(this), pageChangeHandler: this.pageChangeHandler.bind(this) }),
+        _react2.default.createElement(_MovieOptions2.default, { limit: this.state.limit, offset: this.state.offset, page: this.state.page, limitChangeHandler: this.limitChangeHandler.bind(this), pageChangeHandler: this.pageChangeHandler.bind(this), lastPageHandler: this.lastPageHandler.bind(this), nextPageHandler: this.nextPageHandler.bind(this) }),
+        this.state.loading ? _react2.default.createElement(
+          'h1',
+          { className: 'loading-label' },
+          'Loading...'
+        ) : _react2.default.createElement(
+          'h1',
+          { className: 'loading-label' },
+          'Page ',
+          this.state.page
+        ),
         //if component is ready(done fetching data) render movies, otherwise rende status
         this.state.status == "ready" ? this.renderMovies() : this.renderStatus()
       );
@@ -18398,11 +18410,15 @@ var MoviePage = function (_React$Component) {
   }, {
     key: 'renderStatus',
     value: function renderStatus() {
-      return _react2.default.createElement(
-        'h1',
-        null,
-        this.state.status
-      );
+      if (this.state.status != "loading" && this.state.status != "ready") {
+        return _react2.default.createElement(
+          'h1',
+          null,
+          this.state.status
+        );
+      } else {
+        return null;
+      }
     }
 
     //render a MovieGrid that displays the movie data retrieved from api
@@ -18425,16 +18441,42 @@ var MoviePage = function (_React$Component) {
   }, {
     key: 'pageChangeHandler',
     value: function pageChangeHandler(e) {
+      if (Number(e.target.value) != NaN && Number(e.target.value) != 0) {
+        this.setPage(e.target.value);
+      }
+    }
+  }, {
+    key: 'lastPageHandler',
+    value: function lastPageHandler(e) {
+      if (this.state.page - 1 > 0) {
+        this.setPage(this.state.page - 1);
+      }
+    }
+  }, {
+    key: 'nextPageHandler',
+    value: function nextPageHandler(e) {
+      this.setPage(this.state.page + 1);
+    }
+  }, {
+    key: 'setPage',
+    value: function setPage(page) {
       var _this2 = this;
 
-      if (Number(e.target.value) != NaN && Number(e.target.value) != 0) {
-        this.setState({
-          page: Number(e.target.value),
-          offset: Number(e.target.value) * this.state.limit
-        }, function (p) {
-          console.log("updated state. page:" + _this2.state.page + ", offset:" + _this2.state.offset, p);
-        }); //call ajax in setState callback(second param) - or use componentWillUpdate
-      }
+      this.setState({
+        page: Number(page),
+        offset: Number(page) * this.state.limit,
+        loading: true
+      }, function (p) {
+        _this2.loadMovies();
+      }); //call ajax in setState callback(second param) - or use componentWillUpdate
+    }
+
+    //grab movie data from API when component mounts
+
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.loadMovies();
     }
 
     /** 
@@ -18444,8 +18486,8 @@ var MoviePage = function (_React$Component) {
     **/
 
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'loadMovies',
+    value: function loadMovies() {
       var _this3 = this;
 
       fetch("http://www.snagfilms.com/apis/films.json?limit=" + this.state.limit + "&offset=" + this.state.offset).then(function (response) {
@@ -18454,7 +18496,8 @@ var MoviePage = function (_React$Component) {
         console.log(movies.films);
         _this3.setState({
           movies: movies.films,
-          status: "ready"
+          status: "ready",
+          loading: false
         });
       }).catch(function (err) {
         _this3.setState({
@@ -18633,25 +18676,21 @@ var Movie = function (_React$Component2) {
         _react2.default.createElement(
           "div",
           { className: "spec" },
-          "Rated",
           _react2.default.createElement(
             "span",
             { className: "spec-data" },
             this.props.rating
           )
         ),
-        _react2.default.createElement("div", null),
         _react2.default.createElement(
           "div",
           { className: "spec" },
-          "Duration",
           _react2.default.createElement(
             "span",
             { className: "spec-data" },
             this.props.duration
           )
         ),
-        _react2.default.createElement("div", null),
         _react2.default.createElement(
           "div",
           { className: "spec" },
@@ -18787,7 +18826,17 @@ var MovieOptions = function (_React$Component) {
         _react2.default.createElement(
           "div",
           { className: "page-option" },
-          _react2.default.createElement("input", { type: "text", value: this.props.page, onChange: this.props.pageChangeHandler.bind(this) })
+          _react2.default.createElement(
+            "div",
+            { className: "last-page page-btn", onClick: this.props.lastPageHandler },
+            _react2.default.createElement("i", { "class": "fas fa-caret-left pointer-cursor" })
+          ),
+          _react2.default.createElement("input", { type: "text", value: this.props.page, onChange: this.props.pageChangeHandler.bind(this) }),
+          _react2.default.createElement(
+            "div",
+            { className: "next-page page-btn", onClick: this.props.nextPageHandler },
+            _react2.default.createElement("i", { "class": "fas fa-caret-right pointer-cursor" })
+          )
         )
       );
     }
